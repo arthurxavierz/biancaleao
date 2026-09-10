@@ -1,41 +1,62 @@
-# Bianca Leão 4447 — site estático (sem build step)
+# ===================================================
+# Site da campanha Bianca Leao 4447.
+#
+# Este arquivo faz o Netlify publicar a pasta dist/
+# deste repositorio, sem precisar configurar nada na
+# interface. Nao existe etapa de build.
+#
+# Dominio provisorio: biancaleao.achillesmedia.com.br
+# ===================================================
+
 [build]
   publish = "dist"
   command = ""
 
-[build.environment]
-  NODE_VERSION = "20"
-
-# Segurança
+# --- Seguranca -------------------------------------
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
-# Assets versionados: cache longo
+# --- Cache -----------------------------------------
+# Imagens e pacotes nao mudam de nome: cache longo.
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# HTML sempre revalidado (evita servir versão antiga após deploy)
+# HTML, CSS e JS sao revalidados a cada visita, para
+# que um deploy novo apareca na hora.
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# URLs limpas: /pautas -> /pautas.html
-[[redirects]]
-  from = "/pautas"
-  to = "/pautas.html"
-  status = 200
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# --- Atalhos sem .html -----------------------------
+# Conveniencia para quem digita o endereco. O canonical
+# de cada pagina continua apontando para a versao .html,
+# entao nao ha conteudo duplicado no Google.
 [[redirects]]
   from = "/sobre"
   to = "/sobre.html"
+  status = 200
+[[redirects]]
+  from = "/pautas"
+  to = "/pautas.html"
   status = 200
 [[redirects]]
   from = "/participe"
@@ -46,7 +67,7 @@
   to = "/figurinhas.html"
   status = 200
 
-# 404 personalizado
+# --- Pagina de erro --------------------------------
 [[redirects]]
   from = "/*"
   to = "/404.html"

@@ -19,6 +19,7 @@ dist/                 diretório publicado
 ├── sitemap.xml       mapa do site
 ├── styles.css        identidade visual e responsividade
 ├── script.js         animações, interações e SITE_CONFIG
+├── analytics.js      carregador do Google Analytics 4 (GA_MEASUREMENT_ID)
 └── assets/           figurinhas, pacote .zip e favicon
 ```
 
@@ -45,6 +46,12 @@ const SITE_CONFIG = {
   pronta e deixa o visitante escolher o destinatário. Preencher é o comportamento desejado.
 - **`whatsappGroupUrl` vazio:** o botão "Entrar no grupo" exibe um aviso de que o convite
   ainda será divulgado, em vez de quebrar.
+
+## Analytics
+
+O GA4 fica isolado em `dist/analytics.js`. Preencha `GA_MEASUREMENT_ID` com o ID da
+property deste site (`G-XXXXXXXXXX`). Com o campo vazio, nenhum script de rastreio é
+carregado e nenhum cookie é criado.
 
 ## Deploy
 

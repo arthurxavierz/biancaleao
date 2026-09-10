@@ -15,11 +15,11 @@ git init
 git add .
 git commit -m "chore: configuração inicial de deploy"
 git branch -M main
-git remote add origin git@github.com:<org-achilles>/bianca-leao-4447.git
+git remote add origin https://github.com/arthurxavierz/biancaleao.git
 git push -u origin main
 ```
 
-Repositório **privado** até a validação da candidata.
+Repositório: https://github.com/arthurxavierz/biancaleao
 
 ---
 
@@ -31,7 +31,7 @@ Repositório **privado** até a validação da candidata.
    - Publish directory: `dist`
 3. Deploy. O site sobe em `<nome-aleatorio>.netlify.app`.
 4. **Site settings → General → Site name:** renomeie para `bianca-leao-4447`
-   (fica `bianca-leao-4447.netlify.app` — use esse nome no CNAME abaixo).
+   (fica `biancaleao.netlify.app` — use esse nome no CNAME abaixo).
 
 O `netlify.toml` já entrega:
 - headers de segurança (HSTS, nosniff, frame-options, permissions-policy);
@@ -47,7 +47,7 @@ Na zona `achillesmedia.com.br`:
 
 | Tipo  | Nome         | Conteúdo                        | Proxy         |
 |-------|--------------|---------------------------------|---------------|
-| CNAME | `biancaleao` | `bianca-leao-4447.netlify.app`  | **DNS only** ☁️ cinza |
+| CNAME | `biancaleao` | `biancaleao.netlify.app`  | **DNS only** ☁️ cinza |
 
 > **Importante:** deixe o proxy **desligado** (nuvem cinza). Com o proxy laranja, o
 > Netlify não consegue emitir/renovar o certificado Let's Encrypt e o site cai em
@@ -80,6 +80,8 @@ Depois, no Netlify: **Domain management → Add a domain** → `biancaleao.achil
 ## Pendências antes de divulgar
 
 - [ ] Preencher `SITE_CONFIG.whatsappNumber` em `dist/script.js`.
+- [ ] Criar a property GA4 deste site e preencher `GA_MEASUREMENT_ID` em
+      `dist/analytics.js` (enquanto vazio, nenhum script de rastreio carrega).
 - [ ] Preencher `SITE_CONFIG.whatsappGroupUrl` quando o grupo existir.
 - [ ] Criar `dist/assets/og-bianca-leao.jpg` (1200×630) — a imagem de
       compartilhamento já está referenciada em todas as páginas, mas o arquivo
