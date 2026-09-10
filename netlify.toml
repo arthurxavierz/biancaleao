@@ -1,0 +1,53 @@
+# Bianca Leão 4447 — site estático (sem build step)
+[build]
+  publish = "dist"
+  command = ""
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Segurança
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+# Assets versionados: cache longo
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML sempre revalidado (evita servir versão antiga após deploy)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# URLs limpas: /pautas -> /pautas.html
+[[redirects]]
+  from = "/pautas"
+  to = "/pautas.html"
+  status = 200
+[[redirects]]
+  from = "/sobre"
+  to = "/sobre.html"
+  status = 200
+[[redirects]]
+  from = "/participe"
+  to = "/participe.html"
+  status = 200
+[[redirects]]
+  from = "/figurinhas"
+  to = "/figurinhas.html"
+  status = 200
+
+# 404 personalizado
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

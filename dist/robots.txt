@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://biancaleao.achillesmedia.com.br/sitemap.xml
