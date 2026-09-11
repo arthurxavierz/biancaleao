@@ -466,7 +466,7 @@ button { color: inherit; font: inherit; }
   .hero { display: block; min-height: auto; padding: 123px 20px 160px; }
   .hero__copy { padding-bottom: 0; }
   .eyebrow { max-width: 310px; font-size: .56rem; line-height: 1.5; }
-  .hero__title { margin-top: 24px; font-size: clamp(5.3rem,25vw,8rem); }
+  .hero__title { margin-top: 24px; font-size: clamp(2.9rem,19vw,8rem); }
   .hero__script { margin-left: 20px; font-size: 3.6rem; }
   .hero__lead { font-size: .93rem; }
   .hero__actions { align-items: flex-start; flex-direction: column; gap: 18px; }
@@ -513,7 +513,7 @@ button { color: inherit; font: inherit; }
   .footer { grid-template-columns: 1fr; justify-items: start; gap: 27px; }
   .footer > p { justify-self: start; line-height: 1.6; }
   .subpage-hero,.subpage-hero--about { grid-template-columns: 1fr; min-height: auto; padding: 135px 20px 85px; }
-  .subpage-hero h1 { font-size: clamp(4rem,18vw,6.4rem); }
+  .subpage-hero h1 { font-size: clamp(2.6rem,14vw,6.4rem); }
   .subpage-hero__mark { justify-self: start; width: 210px; margin: 65px 15px 15px 0; box-shadow: 14px 14px 0 var(--cyan); }
   .subpage-hero__mark span { font-size: 7rem; }
   .issues__intro,.cause-callout { align-items: flex-start; flex-direction: column; }
@@ -643,3 +643,76 @@ button { color: inherit; font: inherit; }
 
 /* Identificacao legal exigida em propaganda eleitoral */
 .footer__legal { display: block; margin-top: 10px; font-size: .58rem; letter-spacing: .08em; line-height: 1.6; opacity: .62; }
+
+/* ============================================================
+   ASSINATURA DA AGENCIA
+   ============================================================ */
+.footer__credit {
+  grid-column: 1 / -1; justify-self: center;
+  padding-top: 20px; margin-top: 4px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  width: 100%; text-align: center;
+  color: rgba(255,255,255,.3);
+  font-size: .56rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  transition: color .3s ease;
+}
+.footer__credit b { font-weight: 900; color: rgba(255,255,255,.55); transition: color .3s ease; }
+.footer__credit:hover { color: rgba(255,255,255,.55); }
+.footer__credit:hover b { color: var(--yellow); }
+
+/* ============================================================
+   CORRECOES DE LARGURA NO CELULAR
+   O site nao deve arrastar para o lado nem mostrar faixas
+   brancas do fundo nas bordas.
+   ============================================================ */
+html { overflow-x: hidden; }
+body { width: 100%; max-width: 100%; }
+
+/* Nenhuma secao pode ultrapassar a largura da tela */
+main > section, header, footer {
+  max-width: 100%;
+}
+
+/* Palavras longas quebram em vez de vazar */
+h1, h2, h3, h4, p, li, strong, em, small, figcaption, blockquote,
+.display-title, .hero__title, .hero__script {
+  overflow-wrap: break-word; word-wrap: break-word;
+}
+
+@media (max-width: 1080px) {
+  /* Itens de grid nao encolhem abaixo do proprio conteudo por padrao,
+     e era isso que empurrava blocos para fora da tela. */
+  main > section > *, .social__intro, .story__copy, .network__copy { min-width: 0; }
+}
+
+@media (max-width: 760px) {
+  /* A faixa amarela e inclinada: no celular a inclinacao deixava
+     cunhas brancas nos cantos, entao ela fica reta. */
+  .ticker { transform: none; }
+
+  /* Etiquetas de secao podem quebrar em duas linhas */
+  .section-label { white-space: normal; }
+
+  /* Titulos grandes reduzidos para caber sem cortar palavra.
+     Palavras muito longas (PROFUNDIDADE, RESPONSABILIDADE) sao
+     separadas com hifen em vez de estourarem a linha. */
+  .display-title { font-size: clamp(2.5rem,10.5vw,4.4rem); letter-spacing: -.04em; }
+  .display-title, .subpage-hero h1, .hero__title { hyphens: auto; -webkit-hyphens: auto; }
+  .hero__script { font-size: clamp(2.2rem,11vw,3.4rem); }
+  .quote { padding-inline: 22px; }
+
+  /* Selos e etiquetas deixam de vazar para fora da tela */
+  .hero__badge { right: 0; min-width: 0; }
+  .hero__place { left: 0; }
+  .about-portrait__seal { right: 10px; bottom: 14px; width: 92px; font-size: 1.35rem; box-shadow: 8px 8px 0 var(--cyan); }
+
+  /* Rodape empilhado, com a assinatura por ultimo */
+  .footer { grid-template-columns: 1fr; justify-items: center; gap: 22px; text-align: center; }
+  .footer > p { justify-self: center; }
+  .footer__links { flex-wrap: wrap; justify-content: center; }
+}
+
+@media (max-width: 430px) {
+  .display-title { font-size: clamp(2.2rem,9.5vw,3.4rem); }
+  .footer__links { gap: 14px; }
+}
