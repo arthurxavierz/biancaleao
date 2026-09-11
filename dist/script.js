@@ -83,7 +83,7 @@ const networkContent = {
   municipio: ['03','MUNICÍPIO','Serviços próximos, equipes preparadas e articulação para atender cada realidade local.']
 };
 
-const finishLoading = () => window.setTimeout(() => loader?.classList.add('is-finished'), 1750);
+const finishLoading = () => window.setTimeout(() => loader?.classList.add("is-finished"), 850);
 if (document.readyState === 'complete') finishLoading();
 else window.addEventListener('load', finishLoading, { once: true });
 
@@ -260,7 +260,7 @@ const showToast = message => {
   toastTimer = setTimeout(() => toast.classList.remove('is-visible'),4200);
 };
 
-document.querySelector('[data-whatsapp-placeholder]')?.addEventListener('click',() => {
+document.querySelector('[data-whatsapp-grupo]')?.addEventListener('click',() => {
   if (!SITE_CONFIG.whatsappGroupUrl) {
     showToast('O convite oficial do grupo ainda será divulgado pela equipe.');
     return;
