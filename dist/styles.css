@@ -747,8 +747,13 @@ main > section > *, .social__intro, .story__copy, .network__copy,
 /* Mesma logica para os demais titulos grandes: o tamanho vem do
    bloco que os contem, para nenhuma palavra partir ao meio. */
 @supports (container-type: inline-size) {
+  /* Atencao: so entram aqui blocos cuja largura vem do layout
+     (coluna de grid, bloco de largura total). Um item flexivel que
+     se mede pelo proprio conteudo colapsa para zero ao virar
+     container, porque o conteudo deixa de contar para a largura.
+     Foi o que aconteceu com o texto do convite final de pautas. */
   .action-card, .vote__copy, .subpage-hero__copy, .issue-panel,
-  .cause-callout__copy, .priority-card__copy, .sticker-hero__copy,
+  .priority-card__copy, .sticker-hero__copy,
   .priority-modal__body, .participation__cards > * {
     container-type: inline-size;
   }
@@ -757,7 +762,6 @@ main > section > *, .social__intro, .story__copy, .network__copy,
   .vote__copy h2       { font-size: clamp(2.4rem, 15cqi, 7.5rem); }
   .subpage-hero h1     { font-size: clamp(2.4rem, 14cqi, 9rem); }
   .issue-panel h2      { font-size: clamp(2.2rem, 13cqi, 6.7rem); }
-  .cause-callout h2    { font-size: clamp(2rem, 13cqi, 6rem); }
   .priority-card__copy h3 { font-size: clamp(1.8rem, 14cqi, 4.4rem); }
   .priority-card--large h3 { font-size: clamp(2.4rem, 17cqi, 6.2rem); }
 }
@@ -767,10 +771,14 @@ main > section > *, .social__intro, .story__copy, .network__copy,
    consulta, o conteudo deixou de contar e a largura ia a zero, o que
    empilhava o titulo letra por letra. Aqui a largura passa a vir do
    espaco disponivel na faixa. */
-.cause-callout__copy { flex: 1 1 0; }
+.cause-callout__copy { flex: 1 1 auto; min-width: 0; max-width: 100%; }
+/* o botao mantem a largura propria: quem cede espaco e o texto */
+.cause-callout .button { flex: 0 0 auto; white-space: nowrap; }
+.cause-callout h2 { font-size: clamp(2.1rem, 7.4vw, 5.6rem); }
 
 @media (max-width: 760px) {
   .cause-callout__copy { width: 100%; flex: 0 0 auto; }
+  .cause-callout h2 { font-size: clamp(2.1rem, 8.6vw, 3.4rem); }
 }
 
 /* ============================================================
@@ -791,3 +799,8 @@ main > section > *, .social__intro, .story__copy, .network__copy,
   .footer > p { justify-self: center; }
   .footer__links { flex-wrap: wrap; justify-content: center; }
 }
+
+/* Blindagem: todo container de consulta que seja item de um flex
+   recebe largura explicita, para nao depender do conteudo em
+   nenhum navegador. */
+.priority-card__copy { width: 100%; }
