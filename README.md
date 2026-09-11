@@ -8,6 +8,8 @@ Site institucional estático da candidatura de Bianca Leão a Deputada Federal p
 
 ```
 netlify.toml          configuração de deploy (headers, cache, redirects, 404)
+originais/            fotos e artes em resolução original (não publicadas)
+tools/build-images.py gera os assets de imagem a partir de originais/
 dist/                 diretório publicado
 ├── index.html        página inicial
 ├── sobre.html        história de Bianca
@@ -20,7 +22,10 @@ dist/                 diretório publicado
 ├── styles.css        identidade visual e responsividade
 ├── script.js         animações, interações e SITE_CONFIG
 ├── analytics.js      carregador do Google Analytics 4 (GA_MEASUREMENT_ID)
-└── assets/           figurinhas, pacote .zip e favicon
+└── assets/
+    ├── fotos/        retratos e artes em WebP responsivo
+    ├── figurinhas/   figurinhas e pacote .zip
+    └── og-bianca-leao.jpg  imagem de compartilhamento
 ```
 
 ## Rodar localmente
@@ -46,6 +51,20 @@ const SITE_CONFIG = {
   pronta e deixa o visitante escolher o destinatário. Preencher é o comportamento desejado.
 - **`whatsappGroupUrl` vazio:** o botão "Entrar no grupo" exibe um aviso de que o convite
   ainda será divulgado, em vez de quebrar.
+
+## Imagens
+
+As fotos publicadas são geradas a partir de `originais/`:
+
+```bash
+python tools/build-images.py
+```
+
+O script recorta o retrato das artes de campanha (removendo o texto sobreposto),
+gera cada foto em WebP nas larguras usadas pelo `srcset` e monta a imagem de
+compartilhamento 1200×630. Para trocar ou acrescentar fotos, coloque o arquivo em
+`originais/`, ajuste a lista `RECORTES` no script e rode o comando de novo — nunca
+edite os arquivos de `dist/assets/fotos/` à mão.
 
 ## Analytics
 

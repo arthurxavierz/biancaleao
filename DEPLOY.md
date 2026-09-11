@@ -83,8 +83,8 @@ Depois, no Netlify: **Domain management → Add a domain** → `biancaleao.achil
 - [ ] Criar a property GA4 deste site e preencher `GA_MEASUREMENT_ID` em
       `dist/analytics.js` (enquanto vazio, nenhum script de rastreio carrega).
 - [ ] Preencher `SITE_CONFIG.whatsappGroupUrl` quando o grupo existir.
-- [ ] Criar `dist/assets/og-bianca-leao.jpg` (1200×630) — a imagem de
-      compartilhamento já está referenciada em todas as páginas, mas o arquivo
-      ainda não existe.
-- [ ] Confirmar com o jurídico da campanha se o rodapé precisa exibir CNPJ da
-      campanha / número de registro da candidatura (exigência da legislação eleitoral).
+- [ ] Conferir com o jurídico da campanha se a identificação no rodapé
+      (Federação União Progressista — União Brasil, CNPJ 68.468.267/0001-41,
+      extraída das artes oficiais) está completa para a legislação eleitoral.
+- [ ] Substituir as fotos de prototipação por fotos oficiais em alta, quando
+      houver (ver seção Imagens do README).

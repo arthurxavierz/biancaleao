@@ -112,13 +112,8 @@
         </div>
 
         <div class="hero__portrait reveal" data-parallax>
-          <div class="image-slot image-slot--hero">
-            <div class="image-slot__guides" aria-hidden="true"><i></i><i></i></div>
-            <div class="image-slot__content">
-              <span>ESPAÇO PREPARADO</span>
-              <strong>FOTO OFICIAL</strong>
-              <small>Retrato vertical com fundo transparente</small>
-            </div>
+          <div class="image-slot image-slot--hero is-filled">
+            <img class="image-slot__img" src="./assets/fotos/retrato-hero-1280.webp" srcset="./assets/fotos/retrato-hero-640.webp 640w, ./assets/fotos/retrato-hero-960.webp 960w, ./assets/fotos/retrato-hero-1280.webp 1280w" sizes="(max-width: 900px) 90vw, 40vw" alt="Bianca Leão, candidata a Deputada Federal por Minas Gerais" style="object-position:center 18%" fetchpriority="high" decoding="async" />
           </div>
           <div class="hero__badge">
             <span>DEPUTADA<br>FEDERAL</span>
@@ -274,11 +269,11 @@
 
       <section class="story section-space" id="presenca">
         <div class="story__photos">
-          <div class="image-slot image-slot--story image-slot--story-one reveal">
-            <div class="image-slot__content"><span>ESPAÇO PREPARADO</span><strong>BIANCA EM AÇÃO</strong><small>Foto vertical em atividade</small></div>
+          <div class="image-slot image-slot--story image-slot--story-one is-filled reveal">
+            <img class="image-slot__img" src="./assets/fotos/retrato-cafe-720.webp" srcset="./assets/fotos/retrato-cafe-480.webp 480w, ./assets/fotos/retrato-cafe-720.webp 720w" sizes="(max-width: 900px) 60vw, 30vw" alt="Bianca Leão, psicóloga, durante o dia de trabalho" style="object-position:center 20%" loading="lazy" decoding="async" />
           </div>
-          <div class="image-slot image-slot--story image-slot--story-two reveal">
-            <div class="image-slot__content"><span>ESPAÇO PREPARADO</span><strong>COM AS PESSOAS</strong><small>Foto horizontal espontânea</small></div>
+          <div class="image-slot image-slot--story image-slot--story-two is-filled reveal">
+            <img class="image-slot__img" src="./assets/fotos/bianca-rua-960.webp" srcset="./assets/fotos/bianca-rua-640.webp 640w, ./assets/fotos/bianca-rua-960.webp 960w" sizes="(max-width: 900px) 70vw, 34vw" alt="Bianca Leão com o filho no colo, nas ruas de Patrocínio" style="object-position:center 22%" loading="lazy" decoding="async" />
           </div>
           <div class="story__sticker">DE<br>PERTINHO</div>
         </div>
@@ -322,17 +317,24 @@
       <section class="gallery section-space">
         <div class="gallery__head">
           <div>
-            <div class="section-label section-label--light reveal"><span>06</span> ÁLBUM DE MINAS</div>
-            <h2 class="display-title display-title--light reveal">HISTÓRIAS QUE<br><em>MERECEM ESPAÇO.</em></h2>
+            <div class="section-label section-label--light reveal"><span>06</span> NAS REDES</div>
+            <h2 class="display-title display-title--light reveal">O QUE A CAMPANHA<br><em>ESTÁ DIZENDO.</em></h2>
           </div>
-          <p class="reveal">Galeria preparada para receber fotos oficiais da campanha.</p>
+          <p class="reveal">As artes que circulam nos grupos e no feed. Salve, compartilhe e leve a mensagem adiante.</p>
         </div>
-        <div class="gallery__grid">
-          <div class="image-slot gallery-slot gallery-slot--wide reveal"><span>01</span><strong>PELAS CIDADES</strong><small>Formato horizontal</small></div>
-          <div class="image-slot gallery-slot gallery-slot--tall reveal"><span>02</span><strong>VOLUNTARIADO</strong><small>Formato vertical</small></div>
-          <div class="image-slot gallery-slot reveal"><span>03</span><strong>ESCUTA</strong><small>Formato quadrado</small></div>
-          <div class="image-slot gallery-slot reveal"><span>04</span><strong>FAMÍLIAS</strong><small>Formato quadrado</small></div>
-          <div class="image-slot gallery-slot gallery-slot--wide reveal"><span>05</span><strong>PATROCÍNIO</strong><small>Formato horizontal</small></div>
+        <div class="campaign-cards">
+          <figure class="campaign-card reveal">
+            <img src="./assets/fotos/card-etica-840.webp" srcset="./assets/fotos/card-etica-420.webp 420w, ./assets/fotos/card-etica-840.webp 840w" sizes="(max-width: 720px) 86vw, (max-width: 1100px) 44vw, 30vw" alt="Arte de campanha: política feita com ética, verdade e respeito. Mais escolas, mais hospitais, mais inclusão." loading="lazy" decoding="async" width="840" height="1120" />
+            <figcaption><span>01</span><strong>ÉTICA E RESPEITO</strong><small>Mais escolas, mais hospitais, mais inclusão.</small></figcaption>
+          </figure>
+          <figure class="campaign-card reveal">
+            <img src="./assets/fotos/card-psicologa-840.webp" srcset="./assets/fotos/card-psicologa-420.webp 420w, ./assets/fotos/card-psicologa-840.webp 840w" sizes="(max-width: 720px) 86vw, (max-width: 1100px) 44vw, 30vw" alt="Arte de campanha: quando o psicólogo é valorizado, o cuidado chega mais longe." loading="lazy" decoding="async" width="840" height="1120" />
+            <figcaption><span>02</span><strong>CUIDADO QUE CHEGA</strong><small>Quando o psicólogo é valorizado, o cuidado vai mais longe.</small></figcaption>
+          </figure>
+          <figure class="campaign-card reveal">
+            <img src="./assets/fotos/card-independencia-840.webp" srcset="./assets/fotos/card-independencia-420.webp 420w, ./assets/fotos/card-independencia-840.webp 840w" sizes="(max-width: 720px) 86vw, (max-width: 1100px) 44vw, 30vw" alt="Arte de campanha do Dia da Independência: o Brasil é feito de coragem, luta e amor pela pátria." loading="lazy" decoding="async" width="840" height="1120" />
+            <figcaption><span>03</span><strong>CORAGEM E AMOR</strong><small>O Brasil é feito de coragem, luta e amor pela pátria.</small></figcaption>
+          </figure>
         </div>
       </section>
 
@@ -355,7 +357,7 @@
         <span class="logo__name">BIANCA <b>LEÃO</b></span>
         <span class="logo__number">4447</span>
       </a>
-      <p>BIANCA LEÃO 4447 · DEPUTADA FEDERAL · MINAS GERAIS</p>
+      <p>BIANCA LEÃO 4447 · DEPUTADA FEDERAL · MINAS GERAIS<small class="footer__legal">FEDERAÇÃO PARTIDÁRIA UNIÃO PROGRESSISTA — UNIÃO BRASIL · CNPJ 68.468.267/0001-41</small></p>
       <div class="footer__links">
         <a href="./pautas.html">PAUTAS</a>
         <a href="./participe.html">PARTICIPE</a>

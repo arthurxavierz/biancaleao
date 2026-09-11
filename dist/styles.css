@@ -562,3 +562,84 @@ button { color: inherit; font: inherit; }
   .reveal { opacity: 1; transform: none; }
   .hero__title i { transform: none; }
 }
+
+/* ============================================================
+   FOTOS NOS ESPACOS PREPARADOS
+   Os slots ja tinham forma e moldura proprias. A imagem entra
+   por baixo da textura, preservando o recorte e o contorno.
+   ============================================================ */
+.image-slot__img { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.image-slot.is-filled { background: var(--blue); }
+.image-slot.is-filled .image-slot__content,
+.image-slot.is-filled .image-slot__guides,
+.image-slot.is-filled > strong,
+.image-slot.is-filled > small { display: none; }
+.image-slot.is-filled::before { z-index: 2; opacity: .22; }
+
+/* Leve escurecimento no pe da imagem, para o texto proximo respirar */
+.image-slot.is-filled::after {
+  content: ""; position: absolute; inset: 40% 0 0; z-index: 2;
+  background: linear-gradient(to bottom,transparent,rgba(6,31,98,.42));
+  pointer-events: none;
+}
+.image-slot--hero.is-filled::after { inset: 55% 0 0; }
+
+/* O retrato do hero ganha vida no scroll, acompanhando o parallax */
+.image-slot--hero .image-slot__img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.hero__portrait:hover .image-slot--hero .image-slot__img { transform: scale(1.04); }
+
+.image-slot--story .image-slot__img,
+.about-gallery__main .image-slot__img { transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+.image-slot--story.is-filled:hover .image-slot__img,
+.about-gallery__main.is-filled:hover .image-slot__img { transform: scale(1.05); }
+
+@media (prefers-reduced-motion: reduce) {
+  .image-slot__img { transition: none !important; }
+}
+
+/* ============================================================
+   VITRINE DAS ARTES DE CAMPANHA
+   ============================================================ */
+.campaign-cards {
+  margin-top: 70px;
+  display: grid; gap: clamp(18px,2.6vw,30px);
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+}
+.campaign-card {
+  position: relative; margin: 0; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.16); border-radius: 6px;
+  background: var(--blue);
+  transition: transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .6s ease;
+}
+.campaign-card img { display: block; width: 100%; height: auto; aspect-ratio: 3/4; object-fit: cover; }
+.campaign-card figcaption {
+  position: absolute; inset: auto 0 0 0; padding: 54px 22px 22px; color: white;
+  background: linear-gradient(to top,rgba(4,18,58,.94) 38%,transparent);
+}
+.campaign-card figcaption span {
+  display: block; margin-bottom: 8px;
+  font-size: .62rem; font-weight: 800; letter-spacing: .18em; color: var(--yellow);
+}
+.campaign-card figcaption strong {
+  display: block; font-family: var(--display); font-size: clamp(1.1rem,1.7vw,1.5rem); line-height: 1;
+}
+.campaign-card figcaption small {
+  display: block; margin-top: 8px; max-width: 34ch;
+  font-size: .78rem; line-height: 1.45; opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.campaign-card:hover { transform: translateY(-8px); box-shadow: 0 26px 50px rgba(2,12,42,.45); }
+.campaign-card:hover figcaption small,
+.campaign-card:focus-within figcaption small { opacity: .88; transform: translateY(0); }
+
+/* Em telas sem hover a legenda fica sempre visivel */
+@media (hover: none) {
+  .campaign-card figcaption small { opacity: .88; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .campaign-card, .campaign-card figcaption small { transition: none; }
+}
+
+/* Identificacao legal exigida em propaganda eleitoral */
+.footer__legal { display: block; margin-top: 10px; font-size: .58rem; letter-spacing: .08em; line-height: 1.6; opacity: .62; }
