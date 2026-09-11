@@ -62,7 +62,19 @@ python tools/build-images.py
 
 O script recorta o retrato das artes de campanha (removendo o texto sobreposto),
 gera cada foto em WebP nas larguras usadas pelo `srcset` e monta a imagem de
-compartilhamento 1200×630. Para trocar ou acrescentar fotos, coloque o arquivo em
+compartilhamento 1200×630.
+
+As figurinhas de WhatsApp vêm de um segundo script:
+
+```bash
+python tools/build-stickers.py
+```
+
+Ele monta as seis figurinhas 512×512 com o rosto de Bianca em um círculo sobre as
+cores da campanha, e regrava o pacote `.zip` da página. As frases, cores e
+enquadramentos ficam na lista `FIGURINHAS`, no fim do arquivo. Como os arquivos
+mantêm o nome e `/assets/*` tem cache de um ano, suba o `?v=` das figurinhas em
+`dist/figurinhas.html` sempre que regerá-las. Para trocar ou acrescentar fotos, coloque o arquivo em
 `originais/`, ajuste a lista `RECORTES` no script e rode o comando de novo — nunca
 edite os arquivos de `dist/assets/fotos/` à mão.
 
