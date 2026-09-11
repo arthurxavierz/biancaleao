@@ -777,8 +777,10 @@ main > section > *, .social__intro, .story__copy, .network__copy,
 .cause-callout h2 { font-size: clamp(2.1rem, 7.4vw, 5.6rem); }
 
 @media (max-width: 760px) {
-  .cause-callout__copy { width: 100%; flex: 0 0 auto; }
-  .cause-callout h2 { font-size: clamp(2.1rem, 8.6vw, 3.4rem); }
+  .cause-callout { display: block; padding-inline: 22px; }
+  .cause-callout__copy { display: block; width: auto; max-width: none; }
+  .cause-callout h2 { font-size: clamp(1.9rem, 7.8vw, 3rem); }
+  .cause-callout .button { display: inline-flex; margin-top: 28px; }
 }
 
 /* ============================================================
