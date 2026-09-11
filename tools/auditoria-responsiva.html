@@ -1,0 +1,97 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Auditoria responsiva — Bianca Leão 4447</title>
+<style>
+  body { margin:0; font:14px/1.6 system-ui,sans-serif; background:#0f172a; color:#e2e8f0; }
+  header { padding:18px 22px; background:#1e293b; position:sticky; top:0; }
+  h1 { margin:0 0 4px; font-size:16px; }
+  p { margin:0; color:#94a3b8; font-size:12px; }
+  #saida { padding:18px 22px; }
+  .ok { color:#4ade80; }
+  .erro { color:#f87171; }
+  .grupo { margin-bottom:18px; }
+  .grupo h2 { font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:#38bdf8; margin:0 0 6px; }
+  li { font-family:ui-monospace,monospace; font-size:12px; }
+  iframe { position:fixed; left:-9999px; top:0; border:0; height:2600px; }
+</style>
+<header>
+  <h1>Auditoria responsiva</h1>
+  <p>Sirva a pasta <code>dist/</code> (<code>npx serve dist</code>) e abra este arquivo pelo mesmo servidor.</p>
+</header>
+<div id="saida">Rodando…</div>
+<iframe id="f"></iframe>
+<script>
+const LARGURAS = [320,360,390,414,600,768,900,1024,1280,1440,1920];
+const PAGINAS  = ['/index.html','/sobre.html','/pautas.html','/participe.html','/figurinhas.html','/404.html'];
+
+const vazamentos = [], partidas = [], colapsos = [];
+let li = 0, pi = 0;
+const f = document.getElementById('f');
+
+function medir(L, p) {
+  const d = f.contentDocument;
+  const loader = d.querySelector('.intro-loader'); if (loader) loader.remove();
+  d.querySelectorAll('.reveal').forEach(e => e.classList.add('is-visible'));
+  const W = d.documentElement.clientWidth;
+
+  // 1. a pagina nao pode arrastar para o lado
+  if (d.body.scrollWidth > W + 1)
+    vazamentos.push(`${p}@${L}: pagina com ${d.body.scrollWidth}px numa tela de ${W}px`);
+
+  // 2. nenhuma palavra pode ser mais larga que o bloco que a contem
+  d.querySelectorAll('h1,h2,.display-title,.hero__title').forEach(el => {
+    const largura = el.clientWidth; if (largura < 5) return;
+    const tmp = d.createElement('div');
+    tmp.innerHTML = el.innerHTML.replace(/<br\s*\/?>/gi, ' ');
+    (tmp.textContent || '').split(/\s+/).forEach(palavra => {
+      palavra.split('\u00AD').forEach(seg => {          // respeita o hifen suave
+        seg = seg.trim(); if (seg.length < 3) return;
+        const sonda = d.createElement('span');
+        sonda.style.cssText = 'white-space:nowrap;position:absolute;visibility:hidden';
+        sonda.textContent = seg;
+        el.appendChild(sonda);
+        const w = sonda.getBoundingClientRect().width;
+        sonda.remove();
+        if (w > largura + 4) partidas.push(`${p}@${L}: "${seg}" tem ${Math.round(w)}px em ${largura}px`);
+      });
+    });
+  });
+
+  // 3. nenhum bloco de texto pode ser espremido ate sumir
+  d.querySelectorAll('h1,h2,h3,p,blockquote,figcaption').forEach(el => {
+    const txt = (el.textContent || '').trim(); if (txt.length < 14) return;
+    const sec = el.closest('section,footer,header'); if (!sec) return;
+    const w = el.getBoundingClientRect().width, sw = sec.clientWidth;
+    if (sw > 280 && w < Math.min(sw * 0.3, 170))
+      colapsos.push(`${p}@${L}: <${el.tagName.toLowerCase()}> com ${Math.round(w)}px "${txt.slice(0,24)}…"`);
+  });
+}
+
+function bloco(titulo, itens) {
+  const unicos = [...new Set(itens)];
+  return `<div class="grupo"><h2>${titulo}</h2>` +
+    (unicos.length ? `<ul class="erro">${unicos.map(i => `<li>${i}</li>`).join('')}</ul>`
+                   : `<p class="ok">nenhum problema</p>`) + `</div>`;
+}
+
+function proxima() {
+  if (li >= LARGURAS.length) {
+    document.getElementById('saida').innerHTML =
+      bloco('Páginas que vazam para o lado', vazamentos) +
+      bloco('Palavras que partem ao meio', partidas) +
+      bloco('Blocos de texto espremidos', colapsos);
+    document.title = (vazamentos.length + partidas.length + colapsos.length)
+      ? 'AUDITORIA: problemas encontrados' : 'AUDITORIA: tudo certo';
+    return;
+  }
+  const L = LARGURAS[li], p = PAGINAS[pi];
+  f.style.width = L + 'px';
+  f.onload = () => setTimeout(() => {
+    medir(L, p.slice(1, -5));
+    pi++; if (pi >= PAGINAS.length) { pi = 0; li++; }
+    proxima();
+  }, 700);
+  f.src = p + '?auditoria=' + L;
+}
+proxima();
+</script>

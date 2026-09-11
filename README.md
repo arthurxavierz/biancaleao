@@ -9,7 +9,7 @@ Site institucional estático da candidatura de Bianca Leão a Deputada Federal p
 ```
 netlify.toml          configuração de deploy (headers, cache, redirects, 404)
 originais/            fotos e artes em resolução original (não publicadas)
-tools/build-images.py gera os assets de imagem a partir de originais/
+tools/                scripts de apoio (imagens e auditoria)
 dist/                 diretório publicado
 ├── index.html        página inicial
 ├── sobre.html        história de Bianca
@@ -65,6 +65,22 @@ gera cada foto em WebP nas larguras usadas pelo `srcset` e monta a imagem de
 compartilhamento 1200×630. Para trocar ou acrescentar fotos, coloque o arquivo em
 `originais/`, ajuste a lista `RECORTES` no script e rode o comando de novo — nunca
 edite os arquivos de `dist/assets/fotos/` à mão.
+
+## Auditoria responsiva
+
+`tools/auditoria-responsiva.html` abre as seis páginas em 11 larguras, de 320px
+a 1920px, e verifica três coisas: se a página arrasta para o lado, se alguma
+palavra parte ao meio dentro de um título e se algum bloco de texto ficou
+espremido a ponto de não dar para ler.
+
+```bash
+npx serve dist                       # em um terminal
+cp tools/auditoria-responsiva.html dist/
+# abra http://localhost:3000/auditoria-responsiva.html
+```
+
+Rode sempre que mexer em tamanho de fonte, grid ou breakpoint. Ao terminar,
+apague a cópia de `dist/` para não publicá-la.
 
 ## Analytics
 

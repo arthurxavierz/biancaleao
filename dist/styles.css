@@ -761,3 +761,33 @@ main > section > *, .social__intro, .story__copy, .network__copy,
   .priority-card__copy h3 { font-size: clamp(1.8rem, 14cqi, 4.4rem); }
   .priority-card--large h3 { font-size: clamp(2.4rem, 17cqi, 6.2rem); }
 }
+
+/* O bloco de texto do convite final e um item flexivel cuja largura
+   vinha do proprio conteudo. Como ele tambem e um container de
+   consulta, o conteudo deixou de contar e a largura ia a zero, o que
+   empilhava o titulo letra por letra. Aqui a largura passa a vir do
+   espaco disponivel na faixa. */
+.cause-callout__copy { flex: 1 1 0; }
+
+@media (max-width: 760px) {
+  .cause-callout__copy { width: 100%; flex: 0 0 auto; }
+}
+
+/* ============================================================
+   BLOCOS DE TEXTO ESTREITOS DEMAIS EM TELAS INTERMEDIARIAS
+   Em tablets e notebooks pequenos algumas colunas ficavam com
+   menos de 170px, larguras em que o texto fica ilegivel.
+   ============================================================ */
+
+/* "Por que importa" / "Caminhos propostos" empilham enquanto o
+   painel nao tiver largura para duas colunas de leitura. */
+@media (max-width: 1100px) {
+  .issue-panel__columns { grid-template-columns: 1fr; gap: 26px; }
+}
+
+/* O rodape empilha antes de espremer a linha do meio. */
+@media (max-width: 1000px) {
+  .footer { grid-template-columns: 1fr; justify-items: center; gap: 22px; text-align: center; }
+  .footer > p { justify-self: center; }
+  .footer__links { flex-wrap: wrap; justify-content: center; }
+}
