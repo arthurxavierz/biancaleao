@@ -77,6 +77,49 @@ Depois, no Netlify: **Domain management → Add a domain** → `biancaleao.achil
 
 ---
 
+---
+
+## 5. Gerador de fotos (segundo site, mesmo repositório)
+
+A pasta `gerador/` é um site independente, publicado com outro endereço:
+
+Domínio provisório: `gerador.biancaleao.achillesmedia.com.br`
+Domínio definitivo (quando validado): `gerador.biancaleao.com.br`
+
+### Netlify
+
+1. **Add new site → Import an existing project → GitHub** → selecione o **mesmo**
+   repositório `arthurxavierz/biancaleao`.
+2. Na tela de configuração, defina:
+   - **Base directory:** `gerador`
+   - **Build command:** *(vazio)*
+   - **Publish directory:** `gerador/dist`
+
+   Com a base directory preenchida, o Netlify lê `gerador/netlify.toml` e ignora
+   o `netlify.toml` da raiz. Os dois sites convivem sem interferência.
+3. Deploy. **Site settings → General → Site name:** renomeie para
+   `gerador-bianca-leao`.
+
+### Cloudflare (DNS)
+
+Na zona `achillesmedia.com.br`:
+
+| Tipo  | Nome                  | Conteúdo                            | Proxy                 |
+|-------|-----------------------|-------------------------------------|-----------------------|
+| CNAME | `gerador.biancaleao`  | `gerador-bianca-leao.netlify.app`   | **DNS only** ☁️ cinza |
+
+Mesma regra do site principal: proxy desligado, senão o certificado do Netlify
+não é emitido. Depois, no Netlify: **Domain management → Add a domain** →
+`gerador.biancaleao.achillesmedia.com.br` → aguarde o certificado → **Force HTTPS**.
+
+### Observações
+
+- Não há back-end. A foto do apoiador é montada no próprio aparelho e nada é
+  enviado para a internet, então não há dado pessoal armazenado.
+- Molduras, cores, número e slogan ficam em `gerador/dist/campanha.js`.
+- A cada deploy que mexer em CSS ou JS, suba o `?v=N` dos links no
+  `gerador/dist/index.html`.
+
 ## Pendências antes de divulgar
 
 - [ ] Preencher `SITE_CONFIG.whatsappNumber` em `dist/script.js`.
