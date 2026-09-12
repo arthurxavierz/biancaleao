@@ -717,8 +717,11 @@
     });
   });
 
+  /* A roda só amplia quando o gesto é de zoom (pinça do trackpad ou Ctrl).
+     Rolagem comum continua rolando a página, senão o cursor sobre a prévia
+     prenderia a leitura. */
   telaPrincipal.addEventListener('wheel', function (evento) {
-    if (!estado.imagem) { return; }
+    if (!estado.imagem || !(evento.ctrlKey || evento.metaKey)) { return; }
     evento.preventDefault();
     estado.vista.zoom = Math.max(1, Math.min(4, estado.vista.zoom * (evento.deltaY > 0 ? 0.94 : 1.06)));
     aplicarLimites();
