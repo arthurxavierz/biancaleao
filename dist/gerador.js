@@ -1,7 +1,7 @@
 /* ==================================================================
    GERADOR DE FOTOS — motor
    ------------------------------------------------------------------
-   Genérico de propósito: tudo o que é da campanha vive em campanha.js.
+   Genérico de propósito: tudo o que é da campanha vive em gerador-campanha.js.
    As molduras são desenhadas no canvas a partir dos tokens de cor e
    forma, então qualquer formato sai em alta resolução sem precisar de
    arquivo de arte. Nenhuma imagem sai do aparelho do apoiador.
@@ -9,7 +9,7 @@
 (function () {
   'use strict';
 
-  var CFG = window.CAMPANHA;
+  var CFG = window.GERADOR_CAMPANHA;
   if (!CFG) { return; }
 
   var COR = CFG.cores;
@@ -412,8 +412,10 @@
     ctx.stroke();
     ctx.restore();
 
-    var seloX = layout.cx + layout.largura * 0.28;
-    var seloY = layout.cy - layout.altura * 0.30;
+    /* A etiqueta sobe para o alto da janela, encostada na borda de cima
+       da parte redonda. Centralizada ela cobria o rosto da foto. */
+    var seloX = layout.cx + layout.largura * 0.25;
+    var seloY = layout.cy - layout.altura * 0.40;
     desenharSelo(ctx, moldura, e, seloX, seloY, L * 0.66, L - L * 0.045);
 
     desenharPlaca(ctx, layout.placa, moldura, layout.cx, layout.placaTopo);
@@ -537,9 +539,9 @@
 
   function avisar(mensagem) {
     caixaAviso.textContent = mensagem;
-    caixaAviso.classList.add('is-visivel');
+    caixaAviso.classList.add('is-visible');
     clearTimeout(avisar.tempo);
-    avisar.tempo = setTimeout(function () { caixaAviso.classList.remove('is-visivel'); }, 4200);
+    avisar.tempo = setTimeout(function () { caixaAviso.classList.remove('is-visible'); }, 4200);
   }
 
   function iconeCheque() {
@@ -602,6 +604,14 @@
     $$('.moldura canvas', caixaMolduras).forEach(function (tela, indice) {
       var ctx = tela.getContext('2d');
       compor(ctx, tela.width, tela.height, CFG.molduras[indice], estado.imagem, estado.vista);
+    });
+  }
+
+  /* Molduras de exemplo na capa: o mesmo motor, sem foto nenhuma. */
+  function desenharAmostras() {
+    $$('[data-amostra]').forEach(function (tela, indice) {
+      var moldura = CFG.molduras[indice % CFG.molduras.length];
+      compor(tela.getContext('2d'), tela.width, tela.height, moldura, null, estado.vista);
     });
   }
 
@@ -819,6 +829,7 @@
 
   montarFormatos();
   montarMolduras();
+  desenharAmostras();
 
   function prepararFontes() {
     if (!document.fonts || !document.fonts.load) { return Promise.resolve(); }
@@ -833,6 +844,7 @@
     estado.fontesProntas = true;
     pedirRender();
     atualizarMiniaturas();
+    desenharAmostras();
   });
 
   pedirRender();

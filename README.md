@@ -16,6 +16,10 @@ dist/                 diretório publicado
 ├── pautas.html       pautas detalhadas
 ├── participe.html    formulário que abre o WhatsApp
 ├── figurinhas.html   downloads individuais e pacote completo
+├── gerador.html      gerador de fotos com a moldura da campanha
+├── gerador.css       estilos da aba do gerador
+├── gerador.js        motor que desenha as molduras no canvas
+├── gerador-campanha.js  dados da campanha usados pelo gerador
 ├── 404.html          página de erro
 ├── robots.txt        liberação para buscadores
 ├── sitemap.xml       mapa do site
@@ -99,6 +103,36 @@ apague a cópia de `dist/` para não publicá-la.
 O GA4 fica isolado em `dist/analytics.js`. Preencha `GA_MEASUREMENT_ID` com o ID da
 property deste site (`G-XXXXXXXXXX`). Com o campo vazio, nenhum script de rastreio é
 carregado e nenhum cookie é criado.
+
+## Gerador de fotos
+
+A aba `/gerador` monta a foto de apoio em três passos: escolher a imagem,
+ajustar dentro da moldura e baixar. Tudo acontece no aparelho do apoiador:
+nenhum arquivo é enviado para a internet.
+
+As molduras não são imagens prontas. O `dist/gerador.js` desenha cada uma no
+canvas a partir dos tokens de `dist/gerador-campanha.js`, então o mesmo arquivo
+serve para 1080×1080, 1080×1440 e 1080×1920 sem perder nitidez, e criar uma
+moldura nova é acrescentar um objeto na lista `molduras`.
+
+Cada moldura tem:
+
+| Campo     | O que faz                                               |
+|-----------|---------------------------------------------------------|
+| `fundo`   | as duas cores do degradê                                  |
+| `brilho`  | o halo do canto superior                                  |
+| `textura` | `pontos`, `anel`, `listras` ou `nenhuma`                   |
+| `janela`  | recorte da foto: `circulo`, `arco` ou `janela`             |
+| `aro`     | cor do anel em volta da foto                               |
+| `selo`    | a etiqueta que fica no alto da janela                      |
+| `placa`   | a assinatura com nome, número e slogan                     |
+
+Para reaproveitar em outra campanha, troque `dist/gerador-campanha.js` inteiro e
+as fontes no `<head>` de `dist/gerador.html`.
+
+No computador, o zoom pela roda do mouse só acontece com Ctrl (ou com a pinça do
+trackpad). Sem isso a rolagem da página ficaria presa quando o cursor passasse
+sobre a prévia.
 
 ## Deploy
 

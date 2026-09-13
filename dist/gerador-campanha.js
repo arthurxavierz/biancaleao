@@ -2,7 +2,7 @@
    GERADOR DE FOTOS - CONFIGURACAO DA CAMPANHA
    ------------------------------------------------------------------
    Este e o UNICO arquivo que muda de um candidato para outro.
-   O motor (app.js) desenha tudo a partir daqui: nao existe nenhuma
+   O motor (gerador.js) desenha tudo a partir daqui: nao existe nenhuma
    imagem de moldura para produzir, as artes sao geradas no navegador
    em alta resolucao a partir destes tokens.
 
@@ -10,10 +10,10 @@
    1. troque o bloco `candidato`;
    2. troque a paleta em `cores`;
    3. ajuste as `molduras` (pode ter quantas quiser);
-   4. troque a fonte no <head> do index.html se a campanha usar outra.
+   4. troque a fonte no <head> do gerador.html se a campanha usar outra.
 ================================================================== */
 
-window.CAMPANHA = {
+window.GERADOR_CAMPANHA = {
 
   /* --- Identificacao ------------------------------------------- */
   candidato: {

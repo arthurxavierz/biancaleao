@@ -66,6 +66,10 @@
   from = "/figurinhas"
   to = "/figurinhas.html"
   status = 200
+[[redirects]]
+  from = "/gerador"
+  to = "/gerador.html"
+  status = 200
 
 # --- Pagina de erro --------------------------------
 [[redirects]]
