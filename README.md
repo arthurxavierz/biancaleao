@@ -1,138 +1,127 @@
-# Bianca Leão 4447
+# Bianca Leão · Psicóloga
 
-Site institucional estático da candidatura de Bianca Leão a Deputada Federal por Minas Gerais.
+Site do consultório de Bianca Leão, psicóloga clínica (CRP 04/54365), em Patrocínio, MG.
+Nasceu do site de campanha de 2026: a estrutura e os movimentos foram mantidos e o
+conteúdo e a identidade visual foram refeitos para o consultório.
 
 **Stack:** HTML + CSS + JS puros. Sem build step, sem dependências, sem backend.
 
 ## Estrutura
 
 ```
-netlify.toml          configuração de deploy (headers, cache, redirects, 404)
-originais/            fotos e artes em resolução original (não publicadas)
+netlify.toml          deploy, headers, cache, atalhos e redirecionamentos da campanha
+originais/            fotos em resolução original (não publicadas)
 tools/                scripts de apoio (imagens e auditoria)
 dist/                 diretório publicado
-├── index.html        página inicial
-├── sobre.html        história de Bianca
-├── pautas.html       pautas detalhadas
-├── participe.html    formulário que abre o WhatsApp
-├── figurinhas.html   downloads individuais e pacote completo
-├── gerador.html      gerador de fotos com a moldura da campanha
-├── gerador.css       estilos da aba do gerador
-├── gerador.js        motor que desenha as molduras no canvas
-├── gerador-campanha.js  dados da campanha usados pelo gerador
+├── index.html        início: apresentação, temas, como funciona, onde atende, Instagram
+├── sobre.html        história da Bianca
+├── atendimento.html  modalidades, etapas do processo e dúvidas frequentes
+├── agendar.html      formulário que abre o WhatsApp, consultório, mapa e contatos
 ├── 404.html          página de erro
-├── robots.txt        liberação para buscadores
-├── sitemap.xml       mapa do site
 ├── styles.css        identidade visual e responsividade
-├── script.js         animações, interações e SITE_CONFIG
+├── script.js         interações e SITE_CONFIG
 ├── analytics.js      carregador do Google Analytics 4 (GA_MEASUREMENT_ID)
 └── assets/
-    ├── fotos/        retratos e artes em WebP responsivo
-    ├── figurinhas/   figurinhas e pacote .zip
-    └── og-bianca-leao.jpg  imagem de compartilhamento
+    ├── consultorio/  retratos recortados e fotos tratadas
+    ├── fotos/        fotos de origem dos recortes da campanha
+    ├── videos/       vídeos do Instagram (MP4 e WebM) e capas
+    └── og-bianca-leao-psicologa.jpg  imagem de compartilhamento
 ```
 
 ## Rodar localmente
-
-Não precisa instalar nada. Abra `dist/index.html` com a extensão **Live Server** do VS Code, ou:
 
 ```bash
 npx serve dist
 ```
 
-## Configuração da campanha
+## Configuração
 
-Todo o que precisa ser preenchido está no topo de `dist/script.js`:
+Contato e endereço ficam no topo de `dist/script.js`:
 
 ```js
 const SITE_CONFIG = {
-  whatsappNumber: '',     // 55 + DDD + número, só dígitos. Ex.: '5534999999999'
-  whatsappGroupUrl: ''    // link chat.whatsapp.com do grupo oficial
+  whatsappNumber: '5534997118991',      // 55 + DDD + número, só dígitos
+  whatsappDisplay: '(34) 99711-8991',   // como aparece escrito
+  instagram: 'psicologabiancaleao',
+  city: 'Patrocínio, MG',
+  address: ''                           // endereço completo do consultório
 };
 ```
 
-- **`whatsappNumber` vazio:** o formulário ainda funciona — abre o WhatsApp com a mensagem
-  pronta e deixa o visitante escolher o destinatário. Preencher é o comportamento desejado.
-- **`whatsappGroupUrl` vazio:** o botão "Entrar no grupo" exibe um aviso de que o convite
-  ainda será divulgado, em vez de quebrar.
+Com `address` vazio, o site mostra só a cidade, explica que o endereço vai na
+confirmação do horário e centraliza o mapa em Patrocínio. Preenchido, o endereço
+aparece em todas as páginas e o mapa e o botão "Como chegar" apontam para ele.
+
+## Agendamento
+
+O formulário de `agendar.html` não envia nada para servidor nenhum. Ao enviar, monta
+uma mensagem com nome, WhatsApp, para quem é o atendimento, modalidade, dias, período
+e se a pessoa já fez terapia, e abre o WhatsApp do consultório com ela pronta.
+O campo de observação é opcional e o próprio formulário orienta a não contar detalhes
+clínicos por ali.
+
+Os botões "Saiba mais" dos temas abrem `agendar.html?tema=...`, e o tema escolhido
+entra na mensagem.
+
+## Identidade
+
+| Token        | Cor       | Uso                                  |
+|--------------|-----------|--------------------------------------|
+| `--navy`     | `#223756` | textos, botões, faixas escuras        |
+| `--blue`     | `#5c7c9c` | destaques em itálico, etiquetas       |
+| `--mist`     | `#d7e2ec` | fundos claros azulados                |
+| `--sand`     | `#ece3d5` | fundos quentes e sombras deslocadas    |
+| `--paper`    | `#f8f5f0` | fundo base                            |
+
+Fontes: Cormorant Garamond (títulos), Allura (manuscrita) e Manrope (texto).
 
 ## Imagens
 
-As fotos publicadas são geradas a partir de `originais/`:
+As imagens de `dist/assets/consultorio/` saem das fotos da campanha e de posts do
+Instagram (`originais/bianca-oculos.jpg` e `originais/bianca-lilas.jpg`), com o fundo,
+as caixas de texto e o letreiro removidos:
 
 ```bash
-python tools/build-images.py
+pip install rembg onnxruntime scipy pillow
+python tools/build-consultorio.py
 ```
 
-O script recorta o retrato das artes de campanha (removendo o texto sobreposto),
-gera cada foto em WebP nas larguras usadas pelo `srcset` e monta a imagem de
-compartilhamento 1200×630.
+O script recorta, apaga restos das cores da campanha e do letreiro, suaviza as bordas
+cortadas e grava cada retrato em WebP com transparência nas larguras do `srcset`. As
+entradas ficam nas listas `RECORTES` e `FOTOS_INTEIRAS`, no topo do arquivo.
 
-As figurinhas de WhatsApp vêm de um segundo script:
+## Vídeos
+
+Os dois vídeos de `dist/assets/videos/` vieram do Instagram da Bianca:
+
+| Arquivo                   | Onde aparece        | Assunto                                   |
+|---------------------------|---------------------|-------------------------------------------|
+| `bianca-apresentacao`     | Sobre, "Em vídeo"   | quem é a Bianca, karatê e psicologia      |
+| `cansaco-ou-saturacao`    | Início, "Para pensar" | descanso, recuperação e a regra dos 10 minutos |
+
+Cada vídeo tem MP4 (H.264, para Safari e a maioria dos navegadores), WebM (VP9, de
+reserva) e uma capa `.webp`. A página só baixa o vídeo quando a pessoa toca no play.
+Para trocar ou acrescentar um vídeo:
 
 ```bash
-python tools/build-stickers.py
+ffmpeg -i entrada.mp4 -vf "scale=540:-2,fps=30" -c:v libx264 -preset slower -crf 31 \
+  -maxrate 700k -bufsize 1400k -pix_fmt yuv420p -c:a aac -b:a 80k -movflags +faststart nome.mp4
+ffmpeg -i entrada.mp4 -vf "scale=540:-2,fps=30" -c:v libvpx-vp9 -crf 42 -b:v 480k \
+  -maxrate 600k -row-mt 1 -c:a libopus -b:a 64k nome.webm
+ffmpeg -ss 17.8 -i entrada.mp4 -frames:v 1 -vf scale=540:-2 nome.webp   # capa sem legenda
 ```
 
-Ele monta as seis figurinhas 512×512 com o rosto de Bianca em um círculo sobre as
-cores da campanha, e regrava o pacote `.zip` da página. As frases, cores e
-enquadramentos ficam na lista `FIGURINHAS`, no fim do arquivo. Como os arquivos
-mantêm o nome e `/assets/*` tem cache de um ano, suba o `?v=` das figurinhas em
-`dist/figurinhas.html` sempre que regerá-las. Para trocar ou acrescentar fotos, coloque o arquivo em
-`originais/`, ajuste a lista `RECORTES` no script e rode o comando de novo — nunca
-edite os arquivos de `dist/assets/fotos/` à mão.
+Quando houver fotos profissionais novas, o ideal é usá-las no lugar dos recortes.
 
 ## Auditoria responsiva
 
-`tools/auditoria-responsiva.html` abre as seis páginas em 11 larguras, de 320px
-a 1920px, e verifica três coisas: se a página arrasta para o lado, se alguma
-palavra parte ao meio dentro de um título e se algum bloco de texto ficou
-espremido a ponto de não dar para ler.
-
-```bash
-npx serve dist                       # em um terminal
-cp tools/auditoria-responsiva.html dist/
-# abra http://localhost:3000/auditoria-responsiva.html
-```
-
-Rode sempre que mexer em tamanho de fonte, grid ou breakpoint. Ao terminar,
-apague a cópia de `dist/` para não publicá-la.
+`tools/auditoria-responsiva.html` abre as páginas em 11 larguras, de 320px a 1920px.
+Rode sempre que mexer em tamanho de fonte, grid ou breakpoint.
 
 ## Analytics
 
-O GA4 fica isolado em `dist/analytics.js`. Preencha `GA_MEASUREMENT_ID` com o ID da
-property deste site (`G-XXXXXXXXXX`). Com o campo vazio, nenhum script de rastreio é
-carregado e nenhum cookie é criado.
-
-## Gerador de fotos
-
-A aba `/gerador` monta a foto de apoio em três passos: escolher a imagem,
-ajustar dentro da moldura e baixar. Tudo acontece no aparelho do apoiador:
-nenhum arquivo é enviado para a internet.
-
-As molduras não são imagens prontas. O `dist/gerador.js` desenha cada uma no
-canvas a partir dos tokens de `dist/gerador-campanha.js`, então o mesmo arquivo
-serve para 1080×1080, 1080×1440 e 1080×1920 sem perder nitidez, e criar uma
-moldura nova é acrescentar um objeto na lista `molduras`.
-
-Cada moldura tem:
-
-| Campo     | O que faz                                               |
-|-----------|---------------------------------------------------------|
-| `fundo`   | as duas cores do degradê                                  |
-| `brilho`  | o halo do canto superior                                  |
-| `textura` | `pontos`, `anel`, `listras` ou `nenhuma`                   |
-| `janela`  | recorte da foto: `circulo`, `arco` ou `janela`             |
-| `aro`     | cor do anel em volta da foto                               |
-| `selo`    | a etiqueta que fica no alto da janela                      |
-| `placa`   | a assinatura com nome, número e slogan                     |
-
-Para reaproveitar em outra campanha, troque `dist/gerador-campanha.js` inteiro e
-as fontes no `<head>` de `dist/gerador.html`.
-
-No computador, o zoom pela roda do mouse só acontece com Ctrl (ou com a pinça do
-trackpad). Sem isso a rolagem da página ficaria presa quando o cursor passasse
-sobre a prévia.
+O GA4 fica isolado em `dist/analytics.js`. Com `GA_MEASUREMENT_ID` vazio, nenhum script
+de rastreio é carregado e nenhum cookie é criado.
 
 ## Deploy
 

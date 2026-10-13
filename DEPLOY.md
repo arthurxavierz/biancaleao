@@ -1,4 +1,4 @@
-# Deploy — Bianca Leão 4447
+# Deploy · Bianca Leão, psicóloga
 
 Padrão Achilles Media: **GitHub → Netlify → Cloudflare DNS**.
 Supabase não é usado neste projeto (o formulário abre o WhatsApp, não grava nada).
@@ -79,26 +79,22 @@ Depois, no Netlify: **Domain management → Add a domain** → `biancaleao.achil
 
 ---
 
-## 5. Gerador de fotos
+## 5. Virada da campanha para o consultório
 
-O gerador é uma aba do próprio site, em `/gerador`. Não precisa de site nem de
-domínio separado: entra junto com qualquer deploy do `dist/`.
+O `netlify.toml` já redireciona os endereços antigos da campanha (301):
+`/participe` vai para `/agendar.html`, `/pautas` para `/atendimento.html`, e
+`/gerador` e `/figurinhas` para o início. Assim nenhum link que circulou nos grupos
+cai na página de erro.
 
-- Molduras, cores, número e slogan ficam em `dist/gerador-campanha.js`.
-- O motor de desenho fica em `dist/gerador.js` e os estilos em `dist/gerador.css`.
-- Não há back-end. A foto do apoiador é montada no próprio aparelho e nada é
-  enviado para a internet, então não há dado pessoal armazenado.
-- A cada deploy que mexer em `gerador.css` ou `gerador.js`, suba o `?v=N` dos
-  links em `dist/gerador.html`.
+## Pendências antes de publicar
 
-## Pendências antes de divulgar
-
-- [ ] Preencher `SITE_CONFIG.whatsappNumber` em `dist/script.js`.
-- [ ] Criar a property GA4 deste site e preencher `GA_MEASUREMENT_ID` em
-      `dist/analytics.js` (enquanto vazio, nenhum script de rastreio carrega).
-- [ ] Preencher `SITE_CONFIG.whatsappGroupUrl` quando o grupo existir.
-- [ ] Conferir com o jurídico da campanha se a identificação no rodapé
-      (Federação União Progressista — União Brasil, CNPJ 68.468.267/0001-41,
-      extraída das artes oficiais) está completa para a legislação eleitoral.
-- [ ] Substituir as fotos de prototipação por fotos oficiais em alta, quando
-      houver (ver seção Imagens do README).
+- [ ] Confirmar com a Bianca o endereço do consultório e preencher
+      `SITE_CONFIG.address` em `dist/script.js`.
+- [ ] Confirmar duração das sessões (o site diz cerca de 50 minutos), política de
+      remarcação e se emite recibo para reembolso de plano de saúde.
+- [ ] Confirmar o cadastro no e-Psi (exigido pelo CFP para atendimento on-line).
+- [ ] Revisar os textos em primeira pessoa da página Sobre com a Bianca.
+- [ ] Confirmar com a Bianca o uso dos dois vídeos do Instagram no site.
+- [ ] Trocar os retratos recortados por fotos profissionais do consultório, quando
+      houver.
+- [ ] Criar a property GA4 e preencher `GA_MEASUREMENT_ID` em `dist/analytics.js`.
